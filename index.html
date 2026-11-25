@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Bootstrap Components</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .hero-card {
+            height: 500px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+        
+        .hero-card img {
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+            filter: brightness(0.7);
+        }
+        
+        .hero-card .card-img-overlay {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: rgba(0,0,0,0.4);
+            padding: 3rem;
+        }
+        
+        .gradient-bg {
+            background: var(--primary-gradient);
+            color: white;
+        }
+        
+        .component-section {
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border: 1px solid #eee;
+        }
+        
+        .component-header {
+            border-bottom: 2px solid #eee;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .component-header:after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: #0d6efd;
+        }
+        
+        .btn-3d {
+            box-shadow: 0 5px 0 rgba(0,0,0,0.2);
+            transition: all 0.1s ease;
+        }
+        
+        .btn-3d:active {
+            transform: translateY(5px);
+            box-shadow: 0 0 0 rgba(0,0,0,0.2);
+        }
+        
+        .custom-card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .custom-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .custom-card .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .progress-bar-animated {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-bar-animated:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background-image: linear-gradient(
+                -45deg, 
+                rgba(255, 255, 255, 0.2) 25%, 
+                transparent 25%, 
+                transparent 50%, 
+                rgba(255, 255, 255, 0.2) 50%, 
+                rgba(255, 255, 255, 0.2) 75%, 
+                transparent 75%, 
+                transparent
+            );
+            background-size: 50px 50px;
+            animation: move 2s linear infinite;
+        }
+        
+        @keyframes move {
+            0% { background-position: 0 0; }
+            100% { background-position: 50px 50px; }
+        }
+        
+        .form-control-custom {
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #e9ecef;
+        }
+        
+        .form-control-custom:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+        
+        .custom-navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+        
+        .badge-pill {
+            border-radius: 50px;
+            padding: 0.5em 1em;
+        }
+        
+        .icon-container {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+        
+        .custom-alert {
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 3rem 0;
+            margin-top: 5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Enhanced Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light custom-navbar fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">
+                <span class="gradient-bg badge rounded-pill p-2 me-2">BS</span>
+                Bootstrap Advanced
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#components">Components</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Features
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#buttons">Buttons</a></li>
+                            <li><a class="dropdown-item" href="#cards">Cards</a></li>
+                            <li><a class="dropdown-item" href="#forms">Forms</a></li>
+                            <li><a class="dropdown-item" href="#progress">Progress</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <span class="badge bg-primary me-3">v5.3.8</span>
+                    <button class="btn btn-outline-primary me-2">Sign In</button>
+                    <button class="btn btn-primary btn-3d">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5 pt-5">
+        <!-- Hero Section -->
+        <section id="home" class="mb-5">
+            <div class="hero-card mb-5">
+                <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2068&q=80" class="card-img" alt="Technology background">
+                <div class="card-img-overlay text-center">
+                    <h1 class="display-4 fw-bold">Advanced Bootstrap Components</h1>
+                    <p class="lead">Explore enhanced components with custom styling and advanced features</p>
+                    <div class="mt-4">
+                        <button class="btn btn-primary btn-lg me-3 btn-3d">Get Started</button>
+                        <button class="btn btn-outline-light btn-lg">Learn More</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Enhanced Button Section -->
+        <section id="components" class="component-section">
+            <div class="component-header">
+                <h2>Enhanced Button Components</h2>
+                <p class="text-muted">Buttons with custom styling, 3D effects, and gradients</p>
+            </div>
+            
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <h5>Gradient Buttons</h5>
+                    <div class="d-flex flex-wrap gap-3 mb-4">
+                        <button type="button" class="btn text-white border-0" style="background: var(--primary-gradient)">Primary Gradient</button>
+                        <button type="button" class="btn text-white border-0" style="background: var(--secondary-gradient)">Secondary Gradient</button>
+                        <button type="button" class="btn text-white border-0" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%)">Success Gradient</button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h5>3D Effect Buttons</h5>
+                    <div class="d-flex flex-wrap gap-3 mb-4">
+                        <button type="button" class="btn btn-primary btn-3d">3D Primary</button>
+                        <button type="button" class="btn btn-danger btn-3d">3D Danger</button>
+                        <button type="button" class="btn btn-success btn-3d">3D Success</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Button Sizes & States</h5>
+                    <div class="d-flex flex-wrap align-items-center gap-3 mb-4">
+                        <button type="button" class="btn btn-primary btn-sm">Small</button>
+                        <button type="button" class="btn btn-primary">Regular</button>
+                        <button type="button" class="btn btn-primary btn-lg">Large</button>
+                        <button type="button" class="btn btn-primary" disabled>Disabled</button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h5>Button Groups</h5>
+                    <div class="btn-group" role="group">
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                        <label class="btn btn-outline-primary" for="btnradio1">Option 1</label>
+                        
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="btnradio2">Option 2</label>
+                        
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="btnradio3">Option 3</label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Enhanced Card Section -->
+        <section id="cards" class="component-section">
+            <div class="component-header">
+                <h2>Enhanced Card Components</h2>
+                <p class="text-muted">Interactive cards with hover effects and custom layouts</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="custom-card card">
+                        <div class="icon-container gradient-bg mx-auto mt-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-lightning-charge-fill text-white" viewBox="0 0 16 16">
+                                <path d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/>
+                            </svg>
+                        </div>
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Fast Performance</h5>
+                            <p class="card-text">Optimized components for maximum speed and efficiency across all devices.</p>
+                            <a href="#" class="btn btn-primary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="custom-card card">
+                        <div class="icon-container bg-danger bg-gradient mx-auto mt-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-shield-check text-white" viewBox="0 0 16 16">
+                                <path d="M5.338 1.59a61.44 61.44 0 0 0-2.837.856.481.481 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.725 10.725 0 0 0 2.287 2.233c.346.244.652.42.893.533.12.057.218.095.293.118a.55.55 0 0 0 .101.025.615.615 0 0 0 .1-.025c.076-.023.174-.061.294-.118.24-.113.547-.29.893-.533a10.726 10.726 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.775 11.775 0 0 1-2.517 2.453 7.159 7.159 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7.158 7.158 0 0 1-1.048-.625 11.777 11.777 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 62.456 62.456 0 0 1 5.072.56z"/>
+                                <path d="M10.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                            </svg>
+                        </div>
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Secure & Reliable</h5>
+                            <p class="card-text">Built with security in mind and tested for reliability in production environments.</p>
+                            <a href="#" class="btn btn-danger">Explore Security</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="custom-card card">
+                        <div class="icon-container bg-success bg-gradient mx-auto mt-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-phone text-white" viewBox="0 0 16 16">
+                                <path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h6zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z"/>
+                                <path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                            </svg>
+                        </div>
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Responsive Design</h5>
+                            <p class="card-text">Components that adapt perfectly to any screen size from mobile to desktop.</p>
+                            <a href="#" class="btn btn-success">View Examples</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Enhanced Form Components -->
+        <section id="forms" class="component-section">
+            <div class="component-header">
+                <h2>Enhanced Form Components</h2>
+                <p class="text-muted">Advanced form elements with custom styling and validation</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Custom Form Controls</h5>
+                    <div class="mb-3">
+                        <label for="customInput" class="form-label">Custom Styled Input</label>
+                        <input type="text" class="form-control form-control-custom" id="customInput" placeholder="Enter your name">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="customRange" class="form-label">Custom Range Slider</label>
+                        <input type="range" class="form-range" id="customRange" min="0" max="100">
+                        <div class="d-flex justify-content-between">
+                            <small>Low</small>
+                            <small>Medium</small>
+                            <small>High</small>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Custom Checkboxes</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="customCheck1">
+                            <label class="form-check-label" for="customCheck1">
+                                Default checkbox
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="customCheck2" checked>
+                            <label class="form-check-label" for="customCheck2">
+                                Checked checkbox
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <h5>Advanced Select & File Input</h5>
+                    
+                    <div class="mb-3">
+                        <label for="advancedSelect" class="form-label">Advanced Select with Search</label>
+                        <select class="form-select" id="advancedSelect" aria-label="Advanced select example">
+                            <option selected>Choose an option</option>
+                            <option value="1">First option with longer text to demonstrate</option>
+                            <option value="2">Second option</option>
+                            <option value="3">Third option with badge <span class="badge bg-primary ms-2">New</span></option>
+                            <option value="4" disabled>Disabled option</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="customFile" class="form-label">Custom File Upload</label>
+                        <div class="input-group">
+                            <input type="file" class="form-control" id="customFile">
+                            <button class="btn btn-outline-secondary" type="button">Browse</button>
+                        </div>
+                        <div class="form-text">Supports PNG, JPG, PDF up to 5MB</div>
+                    </div>
+                    
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Toggle switch with haptic feedback simulation</label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progress & Alert Components -->
+        <section id="progress" class="component-section">
+            <div class="component-header">
+                <h2>Progress & Alert Components</h2>
+                <p class="text-muted">Enhanced progress indicators and notification components</p>
+            </div>
+            
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <h5>Animated Progress Bars</h5>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between">
+                            <label class="form-label">Loading Progress</label>
+                            <span class="badge bg-primary">75%</span>
+                        </div>
+                        <div class="progress" style="height: 20px;">
+                            <div class="progress-bar progress-bar-animated bg-primary" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between">
+                            <label class="form-label">Storage Usage</label>
+                            <span class="badge bg-danger">90%</span>
+                        </div>
+                        <div class="progress" style="height: 20px;">
+                            <div class="progress-bar bg-danger progress-bar-striped" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between">
+                            <label class="form-label">Project Completion</label>
+                            <span class="badge bg-success">45%</span>
+                        </div>
+                        <div class="progress" style="height: 20px;">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <h5>Enhanced Alerts</h5>
+                    <div class="alert alert-primary custom-alert d-flex align-items-center" role="alert">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-info-circle-fill me-3" viewBox="0 0 16 16">
+                            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                        </svg>
+                        <div>
+                            <strong>Information Alert:</strong> This is a custom styled alert with icon.
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-success custom-alert d-flex align-items-center" role="alert">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check-circle-fill me-3" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                        </svg>
+                        <div>
+                            <strong>Success Alert:</strong> Operation completed successfully with custom styling.
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-warning custom-alert alert-dismissible fade show" role="alert">
+                        <strong>Warning!</strong> This alert can be dismissed. Click the close button.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Grid System Demo -->
+        <section class="component-section">
+            <div class="component-header">
+                <h2>Advanced Grid System</h2>
+                <p class="text-muted">Responsive grid layouts with varying column sizes</p>
+            </div>
+            
+            <div class="row mb-3">
+                <div class="col-lg-8">
+                    <div class="p-4 gradient-bg text-white rounded">
+                        <h5>Main Content Area</h5>
+                        <p>This column takes up 8 out of 12 columns on large screens, making it the primary content area.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="p-4 bg-light rounded">
+                        <h5>Sidebar</h5>
+                        <p>This column takes up 4 out of 12 columns on large screens, perfect for a sidebar.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <div class="p-3 bg-primary bg-opacity-10 rounded">
+                        <h6>Column 1</h6>
+                        <p class="small">Equal width column on medium screens and up.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3 bg-success bg-opacity-10 rounded">
+                        <h6>Column 2</h6>
+                        <p class="small">Equal width column on medium screens and up.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3 bg-warning bg-opacity-10 rounded">
+                        <h6>Column 3</h6>
+                        <p class="small">Equal width column on medium screens and up.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-3 mb-3">
+                    <div class="p-2 border rounded text-center">
+                        <small>col-12 col-sm-6 col-md-3</small>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-3 mb-3">
+                    <div class="p-2 border rounded text-center">
+                        <small>col-12 col-sm-6 col-md-3</small>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-3 mb-3">
+                    <div class="p-2 border rounded text-center">
+                        <small>col-12 col-sm-6 col-md-3</small>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-3 mb-3">
+                    <div class="p-2 border rounded text-center">
+                        <small>col-12 col-sm-6 col-md-3</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>Bootstrap Advanced</h5>
+                    <p>Enhanced components built with Bootstrap 5.3 and custom CSS for modern web applications.</p>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-white"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></a>
+                        <a href="#" class="text-white"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16"><path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/></svg></a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#home" class="text-white-50 text-decoration-none">Home</a></li>
+                        <li><a href="#components" class="text-white-50 text-decoration-none">Components</a></li>
+                        <li><a href="#buttons" class="text-white-50 text-decoration-none">Buttons</a></li>
+                        <li><a href="#cards" class="text-white-50 text-decoration-none">Cards</a></li>
+                        <li><a href="#forms" class="text-white-50 text-decoration-none">Forms</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Subscribe to Newsletter</h5>
+                    <p class="text-white-50">Get updates on new components and features.</p>
+                    <div class
+
+
+
+                
+                     class="d-inline-flex gap-1">
+                        <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Toggle first element</a>
+                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Toggle second element</button>
+                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Toggle both elements</button>
+                      </p>
+                      <div class="row">
+                        <div class="col">
+                          <div class="collapse multi-collapse" id="multiCollapseExample1">
+                            <div class="card card-body">
+                              Some placeholder content for the first collapse component of this multi-collapse example. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div class="collapse multi-collapse" id="multiCollapseExample2">
+                            <div class="card card-body">
+                              Some placeholder content for the second collapse component of this multi-collapse example. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                
